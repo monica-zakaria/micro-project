@@ -44,4 +44,29 @@ systick_delay(32000); //delay 2ms
 
 systick_delay(16000); //delay 1ms
 }
+void LCD_WriteInteger(uint32_t intgr) {
 
+	uint32_t y = 1;
+
+
+	while (intgr > 0)
+	{
+		y = ((y * 10) + (intgr % 10));
+		intgr /= 10;
+	}
+
+	while (y > 1)
+	{
+		lcd_DATA(((y % 10) + 48));
+		y /= 10;
+	}
+}
+void LCD_writestring(uint8_t * str) {
+
+	uint8_t i = 0;
+	while (str[i] != '\0')
+	{
+		lcd_DATA(str[i]);
+		i++;
+	}
+}

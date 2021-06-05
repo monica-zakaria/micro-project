@@ -7,3 +7,5 @@
 void lcd_command(uint8_t command);
 void lcd_DATA(uint8_t character);
 void lcd_init(void);
+void LCD_WriteInteger(uint32_t intgr);
+void LCD_writestring(uint8_t* str);
