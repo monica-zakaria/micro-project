@@ -7,7 +7,7 @@ void led_button_init (void)
   
 	}
 	
-	void led1_on (uint8_t distance ) {
+	void led1_on (float distance ) {
 		if (distance >= 100){ 
 	GPIO_PORTF_DATA_R = 0x02 ; //led1 , pf1 ,[red led]
 	}

@@ -13,9 +13,9 @@ void SystemInit () {}
 
 int __main (void){
 	
-	uint8_t DIST = 110 ;
+	float DIST = 110 ;
 	uint8_t trial [5] = "meter";
-	
+	uint32_t dist = DIST;
     while (1){
     	
 	  	led_button_init();
@@ -24,7 +24,7 @@ int __main (void){
 			
 		lcd_init();
 			
-			LCD_WriteInteger(DIST);
+			LCD_WriteInteger(dist);
 			lcd_DATA(' ');
 		LCD_writestring (trial);
 				
