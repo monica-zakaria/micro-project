@@ -137,6 +137,33 @@ float get_distance(float longitude[],float latitude[],char long_dir[],char lat_d
     return distance;
 }
 
+//SEND TO UART COORDINATES 
+void send_uart(void)
+{
+	int i;
+	int j;
+
+
+	for (j = 1; j < index_point; j++)
+	{
+		for (i = 0; i < 10; i++) {
+			UART5_TRANSMIT(lat_arr[j][i]);
+		}
+		UART5_TRANSMIT(' ');
+		for (i = 0; i < 10; i++) {
+			UART5_TRANSMIT(long_arr[j][i]);
+		}
+		UART5_TRANSMIT(' ');
+		UART5_TRANSMIT(DIR_LAT_N[j]);
+		UART5_TRANSMIT(' ');
+		UART5_TRANSMIT(DIR_LANG_E[j]);
+
+		UART5_TRANSMIT(',');
+
+	}
+
+}
+
 
 
 

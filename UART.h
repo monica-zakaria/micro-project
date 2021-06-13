@@ -9,3 +9,7 @@ uint8_t UART0_Receive (void) ;
 void UART2_INIT (void);
 void UART2_TRANSMIT (uint8_t data);
 uint8_t UART2_Receive (void) ; 
+
+void UART5_INIT(void);
+void UART5_TRANSMIT(uint8_t data);
+uint8_t UART5_Receive(void);

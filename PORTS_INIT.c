@@ -54,6 +54,18 @@ void init(uint8_t number)
 	GPIO_PORTD_LOCK_R = 0X4C4F434B ;	
 	GPIO_PORTD_CR_R |= 0XC0 ;	
 break ;
+
+		 case PORTE:
+	SYSCTL_RCGCGPIO_R |= 0X10; // ENABLE CLOCK FOR PORT E
+		while ((SYSCTL_PRGPIO_R & 0x00000010) == 0) {};
+	GPIO_PORTE_AFSEL_R |= 0x30;   //SET E4 & E5 AD UART2 
+	GPIO_PORTE_PCTL_R |= 0x00110000;
+	GPIO_PORTE_AMSEL_R &= ~0X30;
+	GPIO_PORTE_DEN_R |= 0X30;
+	GPIO_PORTE_LOCK_R = 0X4C4F434B;
+    GPIO_PORTE_CR_R |= 0X30;
+		break;
+
 			 default :
 break ;				 
 		 }	 
