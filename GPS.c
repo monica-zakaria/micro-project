@@ -19,6 +19,20 @@
 	short int lat_index = 0;
 	short int long_index = 0;
 	char GGA_string[70]; //save gga string
+	char lat_arr[100][10];  //string_array
+	char long_arr[100][10];  //string_array
+	float long_distance[100]; //100point
+	float lat_distance[100]; //100point
+	char DIR_LANG_E[100]; //100 point
+	char DIR_LAT_N[100]; //100 point
+	char fix = '0';
+	char GGA_pointers[20];
+	char GGA_CODE[3] = { 0 };
+	short int GGA_index;
+	short int comma_counter;
+	uint32_t COUNTER_GGA = 0;
+	bool flag_counter_7 = false;
+	bool ISITGGA = false;
 
 
 float Atof_function(char* num)
@@ -113,7 +127,93 @@ void get_EW_indicator(short int EWpointer)
 	}
 }
 ////////////////////////////////////////
+void get_fix_gps(short int fixpointer)
+{
+	short int index;
+	for (index = fixpointer + 1; GGA_string[index] != ','; index++) {
+		fix = GGA_string[index];
+	}
 
+}
+void gps_string(uint8_t receive_char) {
+
+
+	int i;
+
+	if (receive_char == '$')
+	{
+		store = false;
+		flag_counter_7 = false;
+		GGA_index = 0;
+		comma_counter = 0;
+		ISITGGA = false;
+		lat_index = 0;
+		long_index = 0;
+
+	}
+	else if (GGA_CODE[0] == 'G' && GGA_CODE[1] == 'G' && GGA_CODE[2] == 'A')
+	{
+		++COUNTER_GGA;
+		ISITGGA = true;
+		GGA_CODE[0] = 0; GGA_CODE[1] = 0; GGA_CODE[2] = 0;
+	}
+	else if (ISITGGA == true)
+	{
+		if (receive_char == ',')
+		{
+			GGA_pointers[comma_counter++] = GGA_index;
+		}
+		if (comma_counter == 7)
+		{
+
+
+			get_fix_gps(GGA_pointers[4]);
+
+			if (fix == '1' && flag_counter_7 == false) {
+				flag_counter_7 = true;
+				get_latitude(GGA_pointers[0]);
+				get_NS_indicator(GGA_pointers[1]);
+				get_longitude(GGA_pointers[2]);
+				get_EW_indicator(GGA_pointers[3]);
+
+
+				if (COUNTER_GGA == 1 || COUNTER_GGA % 4 == 0) {//each 4 GGA COUNTER_GGA %4 == 0  ||
+
+
+					for (i = 0; i < lat_index; i++)
+					{
+						lat_arr[index_point][i] = latitude_buffer[i];
+					}
+
+					for (i = 0; i < long_index; i++)
+					{
+						long_arr[index_point][i] = longitude_buffer[i];
+					}
+					//NEW 
+					long_distance[index_point] = convert_to_float(long_arr[index_point]);
+					lat_distance[index_point] = convert_to_float(lat_arr[index_point]);
+
+					DIR_LANG_E[index_point] = E;
+					DIR_LAT_N[index_point] = N;
+					++index_point;
+
+
+				}
+			}
+		}
+
+
+
+		if (comma_counter <= 8) {
+			GGA_string[GGA_index++] = receive_char;
+		}
+	}
+
+	else {
+
+		GGA_CODE[0] = GGA_CODE[1]; GGA_CODE[1] = GGA_CODE[2]; GGA_CODE[2] = receive_char;
+	}
+}
 
 
 //  Function to change from degree to radian
@@ -177,6 +277,15 @@ float get_distance(float longitude[],float latitude[],char long_dir[],char lat_d
 	distance = distance/1000;
   // printf("%lf m",distance);
     return distance;
+}
+
+//in main at final destination 
+float return_distance(void) {
+	float value;
+	value = get_distance(long_distance, lat_distance, DIR_LANG_E, DIR_LAT_N);
+
+	return value;
+
 }
 
 //SEND TO UART COORDINATES 
