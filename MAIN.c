@@ -25,8 +25,6 @@ static bool flag_start = false;
 int __main(void) {
 
 	uint8_t x[8] = "DISTANCE";
-	float lat1 = 0;
-	float latf = 0;
 	DISTANCE = 0;
 	JUST = 0;
 	led_button_init();
@@ -39,7 +37,7 @@ int __main(void) {
 	while (1) {
 		flag_start = false;
 
-		if (get_button2_value() == 0) {//sw2 pressed
+		if (get_button2_value() == 0) {//sw2 pressed to start 
 			flag_start = true;
 			while (1) {
 
@@ -47,7 +45,7 @@ int __main(void) {
 
 				gps_string(TEST);
 
-				if (get_button1_value() == 0) {
+				if (get_button1_value() == 0) { // sw1 pressed to end
 
 					break;
 				}
