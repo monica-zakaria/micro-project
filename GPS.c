@@ -12,6 +12,14 @@
     int sign ;
     bool inFraction ;
 
+	char latitude_buffer[10];
+	char longitude_buffer[10];
+	char N;
+	char E;
+	short int lat_index = 0;
+	short int long_index = 0;
+	char GGA_string[70]; //save gga string
+
 
 float Atof_function(char* num)
 {
@@ -70,7 +78,41 @@ float convert_to_float(char * raw){
 	return value ;
 }
 
+///////////////////////////////////
+void get_latitude(short int latpointer)
+{
+	short int index;
+	for (index = latpointer + 1; GGA_string[index] != ','; index++) {
+		latitude_buffer[lat_index] = GGA_string[index];
+		++lat_index;
+	}
+}
 
+void get_longitude(short int longpointer)
+{
+	short int index;
+	for (index = longpointer + 1; GGA_string[index] != ','; index++) {
+		longitude_buffer[long_index] = GGA_string[index];
+		++long_index;
+	}
+
+}
+void get_NS_indicator(short int NSpointer)
+{
+	short int index;
+	for (index = NSpointer + 1; GGA_string[index] != ','; index++) {
+		N = GGA_string[index];
+
+	}
+}
+void get_EW_indicator(short int EWpointer)
+{
+	short int index;
+	for (index = EWpointer + 1; GGA_string[index] != ','; index++) {
+		E = GGA_string[index];
+	}
+}
+////////////////////////////////////////
 
 
 
