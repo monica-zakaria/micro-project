@@ -1,12 +1,12 @@
 #include "GPS.h"
     // distance
     uint8_t  index_point = 0 ;
-	float R = 6371;
+	const float R = 6371;
     float dlong = 0;
     float dlat = 0;
     float ans = 0;
 
-		    float integer ;
+	float integer ;
     float fraction ;
     int divisorForFraction ;
     int sign ;

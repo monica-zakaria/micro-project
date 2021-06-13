@@ -13,6 +13,7 @@ with open("New Text Document.txt", 'r') as f:
     putty = f.readlines()
 
 s = putty[1]
+s= s[1:len(s)]
 while(1):
     n = s.find(',')
     sub = s[0:n]
