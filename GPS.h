@@ -19,3 +19,6 @@ void get_latitude(short int latpointer);
 void get_longitude(short int longpointer);
 void get_NS_indicator(short int NSpointer);
 void get_EW_indicator(short int EWpointer)
+void get_fix_gps(short int fixpointer);
+void gps_string(uint8_t receive_char);
+float return_distance(void);
